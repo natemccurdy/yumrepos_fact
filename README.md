@@ -1,13 +1,6 @@
 # Yumrepo Fact
 
-This module adds a custom fact that shows the following information about locally configured YUM repos on a Puppet agent:
-
-* Total count of repos
-* Count of enabled repos
-* Count of disabled repos
-* The name of each enabled or disabled repo
-
-## Example
+This module adds a custom Facter fact that shows the number of enabled and/or disabled yum repositories on RedHat-like servers.
 
 ```shell
 [root@centos7 ~]# facter -p yumrepos
@@ -15,27 +8,25 @@ This module adds a custom fact that shows the following information about locall
   enabled => [
     "base",
     "updates",
-    "extras",
+    "dev_apps",
     "puppet_enterprise"
   ],
   disabled => [
-    "centosplus",
-    "base-debuginfo",
     "base-source",
     "updates-source",
+    "extras",
     "extras-source",
-    "C7.1.1503-base",
-    "C7.1.1503-updates",
-    "C7.1.1503-extras",
     "fasttrack"
   ],
   count => {
     enabled => 4,
-    disabled => 9,
-    total => 13
+    disabled => 5,
+    total => 9
   }
 }
 ```
+
+## Example Usage
 
 ```puppet
 $number_of_repos = $facts['yumrepos']['count']['total']
@@ -48,13 +39,9 @@ file { '/etc/motd':
 
 ```puppet
 if 'corportate-repo' in $facts['yumrepos']['enabled'] {
-
   package { 'foo': ensure => present }
-
 } else {
-
   package { 'bar': ensure => present }
-
 }
 ```
 
