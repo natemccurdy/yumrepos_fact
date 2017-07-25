@@ -1,6 +1,6 @@
 {
   "name": "nate-yumrepos_fact",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Nate McCurdy",
   "summary": "Custom fact that shows the count of yumrepos.",
   "license": "Apache-2.0",
