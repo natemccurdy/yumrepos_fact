@@ -13,28 +13,28 @@ end
 Facter.add(:yumrepos) do
   confine osfamily: 'RedHat'
 
-  enabled_repos  = []
-  disabled_repos = []
-
-  Puppet::Type.type('yumrepo').instances.find_all do |repo|
-    repo_value = repo.retrieve
-
-    # Take the 'enabled' attribute of each repo, convert it to a boolean, and use that result
-    # to the repo's name to the enabled or disabled list.
-    enabled_repos  << repo.name if to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
-    disabled_repos << repo.name unless to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
-  end
-
-  repos_info             = {}
-  repos_info['enabled']  = enabled_repos
-  repos_info['disabled'] = disabled_repos
-  repos_info['count']    = {
-    'enabled'  => enabled_repos.count,
-    'disabled' => disabled_repos.count,
-    'total'    => enabled_repos.count + disabled_repos.count
-  }
-
   setcode do
+    enabled_repos  = []
+    disabled_repos = []
+
+    Puppet::Type.type('yumrepo').instances.find_all do |repo|
+      repo_value = repo.retrieve
+
+      # Take the 'enabled' attribute of each repo, convert it to a boolean, and use that result
+      # to the repo's name to the enabled or disabled list.
+      enabled_repos  << repo.name if     to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
+      disabled_repos << repo.name unless to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
+    end
+
+    repos_info             = {}
+    repos_info['enabled']  = enabled_repos
+    repos_info['disabled'] = disabled_repos
+    repos_info['count']    = {
+      'enabled'  => enabled_repos.count,
+      'disabled' => disabled_repos.count,
+      'total'    => enabled_repos.count + disabled_repos.count
+    }
+
     repos_info
   end
 end
