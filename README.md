@@ -1,3 +1,5 @@
+[![Puppet Forge](https://img.shields.io/puppetforge/v/nate/yumrepos_fact.svg)](https://forge.puppetlabs.com/nate/yumrepos_fact)
+
 # Yumrepo Fact
 
 This module adds a custom Facter fact that shows the number of enabled and/or disabled yum repositories on RedHat-like servers.
