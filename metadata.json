@@ -23,6 +23,7 @@
     }
   ],
   "tags": [
+    "yum",
     "yumrepo",
     "fact",
     "custom facts"
