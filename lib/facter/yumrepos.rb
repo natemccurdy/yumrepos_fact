@@ -20,8 +20,8 @@ Facter.add(:yumrepos) do
     Puppet::Type.type('yumrepo').instances.find_all do |repo|
       repo_value = repo.retrieve
 
-      # Take the 'enabled' attribute of each repo, convert it to a boolean, and use that result
-      # to the repo's name to the enabled or disabled list.
+      # 1. Take the 'enabled' attribute of each repo and convert it to a boolean true or false.
+      # 2. Add the repo's name to the enabled or disabled list based on the boolean value.
       enabled_repos  << repo.name if     to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
       disabled_repos << repo.name unless to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
     end
