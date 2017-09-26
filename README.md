@@ -47,6 +47,15 @@ if 'corportate-repo' in $facts['yumrepos']['enabled'] {
 }
 ```
 
+## Inventory and Reporting Examples
+
+The yumrepos fact can be queried out of PuppetDB to do basic inventory or reporting.
+
+```shell
+# Show the value of the yumrepos fact on all nodes.
+puppet query 'facts[certname, value] { name = "yumrepos" }'
+```
+
 ## Reference
 
 The output of the fact is a hash that contains the following keys:
