@@ -1,15 +1,5 @@
 require 'puppet'
 
-# Possible values for an enabled repo are 'yes', '1', and 'true'.
-# Everything else is considered disabled. However, there is a
-# special case where a [repository] entry doesn't include an
-# entry for 'enabled'. YUM treats those as enabled repos, and in
-# the Puppet catalog, a yumrepo resource without an attribute has
-# that attribute marked as ':absent', so we need to look for that.
-def to_boolean(value)
-  %w[absent yes true 1].include?(value.downcase)
-end
-
 Facter.add(:yumrepos) do
   confine osfamily: 'RedHat'
 
@@ -17,13 +7,17 @@ Facter.add(:yumrepos) do
     enabled_repos  = []
     disabled_repos = []
 
-    Puppet::Type.type('yumrepo').instances.find_all do |repo|
-      repo_value = repo.retrieve
-
-      # 1. Take the 'enabled' attribute of each repo and convert it to a boolean true or false.
-      # 2. Add the repo's name to the enabled or disabled list based on the boolean value.
-      enabled_repos  << repo.name if     to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
-      disabled_repos << repo.name unless to_boolean(repo_value[repo.property(:enabled)].to_s.strip)
+    # In YUM, possible values for an enabled repo are 'yes', '1', and 'true'.
+    # Additionally, YUM treats a repository without an 'enabled' setting as
+    # enabled. In the Puppet catalog, a yumrepo without an 'enabled' attribute
+    # shows the attribute as :absent. Everything else is considered disabled.
+    Puppet::Type.type('yumrepo').instances.each do |repo|
+      case repo.retrieve[:enabled]
+      when 'yes', '1', 'true', :absent
+        enabled_repos << repo.name
+      else
+        disabled_repos << repo.name
+      end
     end
 
     repos_info             = {}
