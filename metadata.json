@@ -1,13 +1,15 @@
 {
   "name": "nate-yumrepos_fact",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Nate McCurdy",
   "summary": "Custom fact that shows the count of yumrepos.",
   "license": "Apache-2.0",
   "source": "https://github.com/natemccurdy/yumrepos_fact",
   "project_page": "https://github.com/natemccurdy/yumrepos_fact",
   "issues_url": "https://github.com/natemccurdy/yumrepos_fact/issues",
-  "dependencies": [ ],
+  "dependencies": [
+
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat"
@@ -20,6 +22,12 @@
     },
     {
       "operatingsystem": "Scientific"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.0.0 < 7.0.0"
     }
   ],
   "tags": [
