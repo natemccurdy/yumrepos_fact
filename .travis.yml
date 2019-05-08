@@ -1,5 +1,5 @@
 ---
-dist: trusty
+dist: xenial
 language: ruby
 cache: bundler
 before_install:
@@ -15,11 +15,7 @@ rvm:
   - 2.5.3
 stages:
   - static
-  - spec
   - acceptance
-  -
-    if: tag =~ ^v\d
-    name: deploy
 matrix:
   fast_finish: true
   include:
@@ -27,28 +23,20 @@ matrix:
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
     -
-      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
-      rvm: 2.4.5
-      stage: spec
+      bundler_args:
+      env: PLATFORM=centos:puppet5
+      script: ["bundle exec rake 'litmus:provision[docker, centos:7]'", "bundle exec rake 'litmus:install_agent[puppet5]'", "bundle exec rake 'litmus:install_module'", "bundle exec rake 'litmus:acceptance:parallel'"]
+      services: docker
+      stage: acceptance
     -
-      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
-      rvm: 2.5.3
-      stage: spec
-    -
-      env: DEPLOY_TO_FORGE=yes
-      stage: deploy
+      bundler_args:
+      env: PLATFORM=centos:puppet6
+      script: ["bundle exec rake 'litmus:provision[docker, centos:7]'", "bundle exec rake 'litmus:install_agent[puppet6]'", "bundle exec rake 'litmus:install_module'", "bundle exec rake 'litmus:acceptance:parallel'"]
+      services: docker
+      stage: acceptance
 branches:
   only:
     - master
     - /^v\d/
 notifications:
   email: false
-deploy:
-  provider: puppetforge
-  user: puppet
-  password:
-    secure: ""
-  on:
-    tags: true
-    all_branches: true
-    condition: "$DEPLOY_TO_FORGE = yes"
