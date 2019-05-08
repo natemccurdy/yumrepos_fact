@@ -1,0 +1,24 @@
+---
+# I don't use these CI systems.
+appveyor.yml:
+  delete: true
+.gitlab-ci.yml:
+  delete: true
+
+Gemfile:
+  required:
+    ':system_tests':
+      - gem: 'puppet-module-posix-system-r#{minor_version}'
+        platforms:
+          - ruby
+      - gem: 'puppet_litmus'
+        platforms:
+          - ruby
+        condition: "ENV['PUPPET_GEM_VERSION'].nil? or ENV['PUPPET_GEM_VERSION'] !~ %r{ 5}"
+
+Rakefile:
+  requires:
+  use_litmus_tasks: true
+
+spec/spec_helper.rb:
+  mock_with: ':rspec'
