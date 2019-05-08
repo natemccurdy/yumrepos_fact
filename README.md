@@ -75,3 +75,31 @@ The name of each yum repo is coming from the title of the relevant `yumrepo` res
 
 Another way to view yum repos is with the command, `yum repolist`. I chose not to use that because that would mean shelling out to a system command rather than staying in Ruby land. I haven't done any benchmarking, but I'm guessing it's faster this way.
 
+## Contributing and Development
+
+Pull requests are always welcomed!
+
+This module uses the [Puppet Development Kit][pdk], [Litmus][litmus], and [TravisCI][travis] for validation and acceptance testing. All pull requests must pass the [TravisCI tests](.travis.yml) before they can be merged.
+
+For local development, here's the workflow I use and what I recommend you use as well:
+1. Create a feature branch.
+2. Make your changes.
+3. Update any docs or README's if user-facing things change.
+4. Validate syntax and style: `pdk validate`
+5. Run local Litmus acceptance tests (**note:** this requies a functioning local Docker installation):
+
+    ```shell
+    pdk bundle exec rake 'litmus:provision[docker, centos:7]'
+    pdk bundle exec rake 'litmus:install_agent[puppet]'
+    pdk bundle exec rake 'litmus:install_module'
+    pdk bundle exec rake 'litmus:acceptance:parallel'
+    pdk bundle exec rake 'litmus:tear_down'
+    ```
+
+6. Push up your branch to your fork and make a Pull Request.
+
+
+[pdk]: https://puppet.com/docs/pdk/1.x/pdk.html
+[litmus]: https://github.com/puppetlabs/puppet_litmus
+[travis]: https://travis-ci.org/
+
