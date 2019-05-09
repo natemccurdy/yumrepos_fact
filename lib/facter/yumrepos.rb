@@ -26,7 +26,7 @@ Facter.add(:yumrepos) do
     repos_info['count']    = {
       'enabled'  => enabled_repos.count,
       'disabled' => disabled_repos.count,
-      'total'    => enabled_repos.count + disabled_repos.count
+      'total'    => enabled_repos.count + disabled_repos.count,
     }
 
     repos_info
