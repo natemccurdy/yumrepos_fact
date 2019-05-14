@@ -20,15 +20,15 @@ describe 'yumrepos' do
     content = <<~REPO
       [foo]
       name=foo
-      baseurl=https://.not.a.real.repo
+      baseurl=https://not.a.real.repo
       enabled=1
       [bar]
       name=bar
-      baseurl=https://.not.a.real.repo
+      baseurl=https://not.a.real.repo
       enabled=1
       [baz]
       name=baz
-      baseurl=https://.not.a.real.repo
+      baseurl=https://not.a.real.repo
       enabled=0
     REPO
     run_shell('rm -rf /etc/yum.repos.d/*')
@@ -47,7 +47,7 @@ describe 'yumrepos' do
     end
 
     it 'enabled should be the enabled repos' do
-      expect(JSON.parse(run_fact['stdout'])['yumrepos']['enabled']).to eq(['foo', 'bar'])
+      expect(JSON.parse(run_fact['stdout'])['yumrepos']['enabled'].sort).to eq(['foo', 'bar'].sort)
     end
 
     it 'disabled should be the disabled repos' do
