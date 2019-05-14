@@ -11,12 +11,12 @@ Facter.add(:yumrepos) do
     # Additionally, YUM treats a repository without an 'enabled' setting as
     # enabled. In the Puppet catalog, a yumrepo without an 'enabled' attribute
     # shows the attribute as :absent. Everything else is considered disabled.
-    Puppet::Type.type('yumrepo').instances.each do |repo|
-      case repo.retrieve[:enabled]
+    Puppet::Resource.indirection.search('yumrepo').each do |repo|
+      case repo[:enabled]
       when 'yes', '1', 'true', :absent
-        enabled_repos << repo.name
+        enabled_repos << repo.title
       else
-        disabled_repos << repo.name
+        disabled_repos << repo.title
       end
     end
 
