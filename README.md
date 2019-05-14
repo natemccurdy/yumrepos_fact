@@ -1,4 +1,5 @@
 [![Puppet Forge](https://img.shields.io/puppetforge/v/nate/yumrepos_fact.svg)](https://forge.puppetlabs.com/nate/yumrepos_fact)
+[![Build Status](https://www.travis-ci.com/natemccurdy/yumrepos_fact.svg?branch=master)](https://www.travis-ci.com/natemccurdy/yumrepos_fact)
 
 # Yumrepo Fact
 
