@@ -4,9 +4,8 @@ require 'json'
 # @summary: Helper function to run a fact using the lib dir from our module.
 #           Uses Litmus's run_shell() function and returns a Hash containing
 #           a 'stdout', 'stderr', and 'exit_code' key.
-# @param [string]  fact_name: The name of the fact to evaluate
 def run_fact
-  run_shell('facter -j -p --custom-dir /etc/puppetlabs/code/environments/production/modules/yumrepos_fact/lib/facter yumrepos').first['result']
+  run_shell('facter -j -p --custom-dir /etc/puppetlabs/code/environments/production/modules/yumrepos_fact/lib/facter yumrepos')
 end
 
 describe 'yumrepos' do
