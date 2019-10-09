@@ -90,9 +90,7 @@ For local development, here's the workflow I use and what I recommend you use as
 5. Run local Litmus acceptance tests (**note:** this requies a functioning local Docker installation):
 
     ```shell
-    pdk bundle exec rake 'litmus:provision[docker, centos:7]'
-    pdk bundle exec rake 'litmus:install_agent[puppet]'
-    pdk bundle exec rake 'litmus:install_module'
+    pdk bundle exec rake 'litmus:provision_install[docker]'
     pdk bundle exec rake 'litmus:acceptance:parallel'
     pdk bundle exec rake 'litmus:tear_down'
     ```
