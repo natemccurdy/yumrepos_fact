@@ -17,18 +17,14 @@ spec/spec_helper.rb:
   includes:
     - bundler_args: ~
       env: PLATFORM=centos:puppet5
-      script: >
-        bundle exec rake 'litmus:provision_install[docker]' &&
-        bundle exec rake 'litmus:acceptance:parallel' &&
-        bundle exec rake 'litmus:tear_down'
+      before_script: bundle exec rake 'litmus:provision_install[docker]'
+      script: bundle exec rake 'litmus:acceptance:parallel'
       services: docker
       stage: acceptance
     - bundler_args: ~
       env: PLATFORM=centos:puppet6
-      script: >
-        bundle exec rake 'litmus:provision_install[docker]' &&
-        bundle exec rake 'litmus:acceptance:parallel' &&
-        bundle exec rake 'litmus:tear_down'
+      before_script: bundle exec rake 'litmus:provision_install[docker]'
+      script: bundle exec rake 'litmus:acceptance:parallel'
       services: docker
       stage: acceptance
   remove_includes:
