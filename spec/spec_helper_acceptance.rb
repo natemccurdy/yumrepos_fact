@@ -2,6 +2,8 @@ require 'serverspec'
 require 'puppet_litmus'
 require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
 include PuppetLitmus
+# Temp workaround for https://github.com/puppetlabs/pdk/issues/770
+require 'pdk/util'
 
 if ENV['TARGET_HOST'].nil? || ENV['TARGET_HOST'] == 'localhost'
   puts 'Running tests against this machine !'
