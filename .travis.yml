@@ -29,14 +29,14 @@ matrix:
     -
       bundler_args:
       env: PLATFORM=centos:puppet5
-      script: bundle exec rake 'litmus:provision_install[docker]' && bundle exec rake 'litmus:acceptance:parallel'
+      script: bundle exec rake 'litmus:provision_install[docker]' && bundle exec rake 'litmus:acceptance:parallel' && bundle exec rake 'litmus:tear_down'
 
       services: docker
       stage: acceptance
     -
       bundler_args:
       env: PLATFORM=centos:puppet6
-      script: bundle exec rake 'litmus:provision_install[docker]' && bundle exec rake 'litmus:acceptance:parallel'
+      script: bundle exec rake 'litmus:provision_install[docker]' && bundle exec rake 'litmus:acceptance:parallel' && bundle exec rake 'litmus:tear_down'
 
       services: docker
       stage: acceptance
