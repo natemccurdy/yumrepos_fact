@@ -27,22 +27,34 @@ matrix:
   fast_finish: true
   include:
     -
+      before_script:
+        - "bundle exec rake 'litmus:provision_list[travis_el]'"
+        - "bundle exec rake 'litmus:install_agent[puppet5]'"
+        - "bundle exec rake litmus:install_module"
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=travis_el_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+      sudo: required
+    -
+      before_script:
+        - "bundle exec rake 'litmus:provision_list[travis_el]'"
+        - "bundle exec rake 'litmus:install_agent[puppet6]'"
+        - "bundle exec rake litmus:install_module"
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=travis_el_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+      sudo: required
+    -
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
-    -
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
-      bundler_args:
-      env: PLATFORM=centos:puppet5
-      script: bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
-    -
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
-      bundler_args:
-      env: PLATFORM=centos:puppet6
-      script: bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
 branches:
   only:
     - master

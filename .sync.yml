@@ -9,24 +9,14 @@ spec/spec_helper.rb:
   mock_with: ':rspec'
 
 .travis.yml:
+  use_litmus: true
+  litmus:
+    provision_list: [travis_el]
   deploy: false
   dist: xenial
   stages:
     - static
     - acceptance
-  includes:
-    - bundler_args: ~
-      env: PLATFORM=centos:puppet5
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
-      script: bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
-    - bundler_args: ~
-      env: PLATFORM=centos:puppet6
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
-      script: bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
   remove_includes:
     - env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
       rvm: 2.4.5
