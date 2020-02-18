@@ -24,14 +24,10 @@ group :development do
   gem "json", '= 2.0.4',                                         require: false if Gem::Requirement.create('~> 2.4.2').satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "json", '= 2.1.0',                                         require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "rb-readline", '= 0.5.5',                                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "puppet-module-posix-default-r#{minor_version}", '~> 0.3', require: false, platforms: [:ruby]
-  gem "puppet-module-posix-dev-r#{minor_version}", '~> 0.3',     require: false, platforms: [:ruby]
-  gem "puppet-module-win-default-r#{minor_version}", '~> 0.3',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "puppet-module-win-dev-r#{minor_version}", '~> 0.3',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
-end
-group :system_tests do
-  gem "puppet-module-posix-system-r#{minor_version}", require: false, platforms: [:ruby]
-  gem "puppet_litmus",                                require: false, platforms: [:ruby] if ENV['PUPPET_GEM_VERSION'].nil? or ENV['PUPPET_GEM_VERSION'] !~ %r{ 5}
+  gem "puppet-module-posix-default-r#{minor_version}", '~> 0.4', require: false, platforms: [:ruby]
+  gem "puppet-module-posix-dev-r#{minor_version}", '~> 0.4',     require: false, platforms: [:ruby]
+  gem "puppet-module-win-default-r#{minor_version}", '~> 0.4',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "puppet-module-win-dev-r#{minor_version}", '~> 0.4',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
