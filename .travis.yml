@@ -5,7 +5,10 @@ cache: bundler
 before_install:
   - bundle -v
   - rm -f Gemfile.lock
-  - gem update --system $RUBYGEMS_VERSION
+  - "# Update system gems if requested. This is useful to temporarily workaround troubles in the test runner"
+  - "# See https://github.com/puppetlabs/pdk-templates/commit/705154d5c437796b821691b707156e1b056d244f for an example of how this was used"
+  - "# Ignore exit code of SIGPIPE'd yes to not fail with shell's pipefail set"
+  - '[ -z "$RUBYGEMS_VERSION" ] || (yes || true) | gem update --system $RUBYGEMS_VERSION'
   - gem --version
   - bundle -v
 script:
@@ -27,16 +30,16 @@ matrix:
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
     -
+      before_script: bundle exec rake 'litmus:provision_install[docker]'
       bundler_args:
       env: PLATFORM=centos:puppet5
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
       script: bundle exec rake 'litmus:acceptance:parallel'
       services: docker
       stage: acceptance
     -
+      before_script: bundle exec rake 'litmus:provision_install[docker]'
       bundler_args:
       env: PLATFORM=centos:puppet6
-      before_script: bundle exec rake 'litmus:provision_install[docker]'
       script: bundle exec rake 'litmus:acceptance:parallel'
       services: docker
       stage: acceptance
