@@ -28,12 +28,12 @@ matrix:
   include:
     -
       before_script:
-        - "bundle exec rake 'litmus:provision_list[travis_el]'"
+        - "bundle exec rake 'litmus:provision_list[centos]'"
         - "bundle exec rake 'litmus:install_agent[puppet5]'"
         - "bundle exec rake litmus:install_module"
       bundler_args:
       dist: trusty
-      env: PLATFORMS=travis_el_puppet5
+      env: PLATFORMS=centos_puppet5
       rvm: 2.5.3
       script: ["bundle exec rake litmus:acceptance:parallel"]
       services: docker
@@ -41,12 +41,12 @@ matrix:
       sudo: required
     -
       before_script:
-        - "bundle exec rake 'litmus:provision_list[travis_el]'"
+        - "bundle exec rake 'litmus:provision_list[centos]'"
         - "bundle exec rake 'litmus:install_agent[puppet6]'"
         - "bundle exec rake litmus:install_module"
       bundler_args:
       dist: trusty
-      env: PLATFORMS=travis_el_puppet6
+      env: PLATFORMS=centos_puppet6
       rvm: 2.5.3
       script: ["bundle exec rake litmus:acceptance:parallel"]
       services: docker
