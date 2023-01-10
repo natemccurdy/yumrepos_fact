@@ -1,0 +1,40 @@
+---
+name: checks
+
+"on":
+  - pull_request
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  pdk:
+    # Switch to ubuntu-latest (22, jammy) when https://tickets.puppetlabs.com/browse/PDK-1796 is done.
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        puppet_versions:
+          - '6'
+          - '7'
+    name: Puppet ${{ matrix.puppet_versions }}
+    env:
+      PDK_PUPPET_VERSION: ${{ matrix.puppet_versions }}
+    steps:
+      - uses: actions/checkout@v3
+      # We're using the PDK directly on the runner becauase of Litmus, which
+      # uses Docker, and I don't want to get docker-in-docker working because I
+      # value my sanity: https://github.com/puppetlabs/pdk-docker/pull/25
+      - name: Install the PDK
+        run: |
+          CODENAME=$(awk -F'=' '/UBUNTU_CODENAME/ {print $2}' /etc/os-release)
+          wget https://apt.puppet.com/puppet-tools-release-$CODENAME.deb
+          sudo dpkg -i puppet-tools-release-$CODENAME.deb && rm puppet-tools-release-$CODENAME.deb
+          sudo apt update
+          sudo apt install pdk
+      - name: PDK lint
+        run: pdk validate
+      - name: PDK spec test
+        run: pdk test unit
+      - name: Litmus acceptance test
+        run: pdk bundle exec rake 'litmus:provision[docker, centos:7]' 'litmus:install_agent[puppet${{ matrix.puppet_versions }}]' litmus:install_module litmus:acceptance:parallel
