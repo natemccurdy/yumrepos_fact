@@ -4,67 +4,19 @@ appveyor.yml:
   delete: true
 .gitlab-ci.yml:
   delete: true
-
-Gemfile:
-  required:
-    ':system_tests':
-      - gem: 'puppet-module-posix-system-r#{minor_version}'
-        platforms:
-          - ruby
-      - gem: 'puppet_litmus'
-        platforms:
-          - ruby
-        condition: "ENV['PUPPET_GEM_VERSION'].nil? or ENV['PUPPET_GEM_VERSION'] !~ %r{ 5}"
-
-Rakefile:
-  requires:
-  use_litmus_tasks: true
-
-spec/spec_helper.rb:
-  mock_with: ':rspec'
-
 .travis.yml:
-  deploy: false
-  dist: xenial
-  stages:
-    - static
-    - acceptance
-  includes:
-    - bundler_args: ~
-      env: PLATFORM=centos:puppet5
-      script:
-        - bundle exec rake 'litmus:provision[docker, centos:7]'
-        - bundle exec rake 'litmus:install_agent[puppet5]'
-        - bundle exec rake 'litmus:install_module'
-        - bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
-    - bundler_args: ~
-      env: PLATFORM=centos:puppet6
-      script:
-        - bundle exec rake 'litmus:provision[docker, centos:7]'
-        - bundle exec rake 'litmus:install_agent[puppet6]'
-        - bundle exec rake 'litmus:install_module'
-        - bundle exec rake 'litmus:acceptance:parallel'
-      services: docker
-      stage: acceptance
-  remove_includes:
-    - env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
-      rvm: 2.4.5
-      stage: spec
-    - env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
-      rvm: 2.5.3
-      stage: spec
-    - env: DEPLOY_TO_FORGE=yes
-      stage: deploy
-
-.rubocop.yml:
-  default_configs:
-    AllCops:
-      TargetRubyVersion: '2.4'
-    Style/FrozenStringLiteralComment:
-      Enabled: false
+  unmanaged: true
 
 .gitignore:
   paths:
     - '/html'
+    - '.config/'
+    - '.pdk/'
+
+spec/spec_helper.rb:
+  mock_with: ":rspec"
+
+.devcontainer/README.md:
+  delete: true
+.devcontainer/devcontainer.json:
+  unmanaged: true
