@@ -1,5 +1,5 @@
 [![Puppet Forge](https://img.shields.io/puppetforge/v/nate/yumrepos_fact.svg)](https://forge.puppetlabs.com/nate/yumrepos_fact)
-[![Build Status](https://www.travis-ci.com/natemccurdy/yumrepos_fact.svg?branch=master)](https://www.travis-ci.com/natemccurdy/yumrepos_fact)
+[![Build Status](https://github.com/natemccurdy/yumrepos_fact/actions/workflows/checks.yml/badge.svg)](https://github.com/natemccurdy/yumrepos_fact/actions/workflows/checks.yml)
 
 # Yumrepo Fact
 
@@ -80,7 +80,7 @@ Another way to view yum repos is with the command, `yum repolist`. I chose not t
 
 Pull requests are always welcomed!
 
-This module uses the [Puppet Development Kit][pdk], [Litmus][litmus], and [TravisCI][travis] for validation and acceptance testing. All pull requests must pass the [TravisCI tests](.travis.yml) before they can be merged.
+This module uses the [Puppet Development Kit][pdk] and [Litmus][litmus] for validation and acceptance testing. All pull requests must pass the [GitHub Actions checks][ghactions_checks] before they can be merged.
 
 For local development, here's the workflow I use and what I recommend you use as well:
 1. Create a feature branch.
@@ -102,5 +102,5 @@ For local development, here's the workflow I use and what I recommend you use as
 
 [pdk]: https://puppet.com/docs/pdk/1.x/pdk.html
 [litmus]: https://github.com/puppetlabs/puppet_litmus
-[travis]: https://travis-ci.org/
+[ghactions_checks]: https://github.com/natemccurdy/yumrepos_fact/actions/workflows/checks.yml
 

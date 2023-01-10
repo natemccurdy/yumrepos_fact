@@ -5,7 +5,10 @@ appveyor.yml:
 .gitlab-ci.yml:
   delete: true
 .travis.yml:
-  unmanaged: true
+  delete: true
+
+common:
+  honeycomb: false
 
 .gitignore:
   paths:
