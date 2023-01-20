@@ -100,7 +100,7 @@ For local development, here's the workflow I use and what I recommend you use as
 6. Push up your branch to your fork and make a Pull Request.
 
 
-[pdk]: https://puppet.com/docs/pdk/1.x/pdk.html
+[pdk]: https://www.puppet.com/docs/pdk/2.x/pdk.html
 [litmus]: https://github.com/puppetlabs/puppet_litmus
 [ghactions_checks]: https://github.com/natemccurdy/yumrepos_fact/actions/workflows/checks.yml
 
